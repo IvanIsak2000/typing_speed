@@ -2,41 +2,25 @@ import os
 import sys
 import random
 from datetime import datetime
+import string
+import time
 
 import readchar
 
 
-def keyboard_check():
-    example_text = 'MIllerwa-s12345678910a,kind!and"compassionateman.'
-
-    while True:
-        for symbol in range(len(example_text)):
-            random_symbol = random.choice(example_text)
-            print(
-                f'Random symbol is "{random_symbol}".To check the keypad readings, simply press this letter')
-
-            user_key = readchar.readkey()
-
-            if user_key == random_symbol:
-                os.system('cls')
-                print('Right!')
-
-            else:
-                os.system('cls')
-                print('Wrong!')
-
-
 def check_symbol_for_basic_mode(correct_key):
-    
+
     print('\nWrong keystroke history: ')
 
-    while True:
+    maschine_text = string.ascii_lowercase + \
+        string.ascii_uppercase + string.digits + string.punctuation
 
-        user_key = readchar.readkey()
-        print(user_key)
+    for machine_key in random.choice(maschine_text):
+        print(machine_key)
 
-        if user_key == correct_key:
+        if machine_key == correct_key:
             break
+            time.sleep(0.1)
 
 
 def basic_mode(random_text):
@@ -60,18 +44,17 @@ def basic_mode(random_text):
 
     os.system('cls')
     print('Completed!')
-    print(f'You started in {started_time}')
-    print(f'You finished in {finished_time}')
+    print(f'Machine started in {started_time}')
+    print(f'Machine finished in {finished_time}')
+    print(f'Time: {int(finished_time[0:2]) - int(started_time[0:2])} hour {int(finished_time[3:5]) - int(started_time[3:5])} minutes {int(finished_time[6:8]) - int(started_time[6:8])} seconds')
 
     for_exit = input('Enter any button to exit...')
 
 
 if __name__ == '__main__':
-    mode = input('Select Mode: Keyboard check(1) or Basic mode(2)')
-    if mode == '1':
-        keyboard_check()
+    mode = input(' Machine write mode(2)')
 
-    elif mode == '2':
+    if mode == '2':
         with open('texts.txt', 'r', encoding='utf-8') as text_file:
             texts = text_file.read()
             texts = texts.replace('\n', '').split('/')
